@@ -148,41 +148,41 @@ function createListener(validator) {
     const text = e.target.value;
     const valid = validator(text);
     const showTip = text !== "" && !valid;
-    const tooltip = e.target.nextElementSibling;
+    const tooltip = e.target.previousElementSibling;
     showOrHideTip(showTip, tooltip);
-    console.log('awdawd')
   };
 }
 
 nameInput.addEventListener("input", createListener(isValidUsername));
+emailInput.addEventListener("input", createListener(isValidUsername));
 
 
 //
-//
-// nameInput.style.backgroundColor = 'red'
-// emailInput.style.backgroundColor = 'red'
-// titleDropdown.style.backgroundColor = 'red'
-// otherTitleInput.style.backgroundColor = 'red'
-// console.log(`NAME: ${nameInput.value}`);
-// console.log(`EMAIL ${emailInput.value}`);
-// console.log(`OTHER JOB: ${otherTitleInput.value}`);
-//
-// sizeDropdown.style.backgroundColor = 'red'
-// // designDropdown.style.backgroundColor = 'red'
-// colorDropdown.style.backgroundColor = 'red'
-// console.log(`SIZE: ${sizeDropdown.value}`);
-// console.log(`DESIGN ${designDropdown.value}`);
-// console.log(`COLOR: ${colorDropdown.value}`);
-//
-// paymentDropdown.style.backgroundColor = 'red'
-// ccInput.style.backgroundColor = 'red'
-// zipInput.style.backgroundColor = 'red'
-// cvvInput.style.backgroundColor = 'red'
-// expDateDropdown.style.backgroundColor = 'red'
-// expYearDropdown.style.backgroundColor = 'red'
-// console.log(`PAYMENT METHOD: ${paymentDropdown.value}`);
-// console.log(`CARD NUMBER: ${ccInput.value}`);
-// console.log(`ZIP CODE: ${zipInput.value}`);
-// console.log(`CVV: ${cvvInput.value}`);
-// console.log(`EXP DATE: ${expDateDropdown.value}`);
-// console.log(`EXP YEAR: ${expYearDropdown.value}`);
+
+nameInput.style.backgroundColor = '#ff5a5a'
+emailInput.style.backgroundColor = '#ff5a5a'
+titleDropdown.style.backgroundColor = '#ff5a5a'
+otherTitleInput.style.backgroundColor = '#ff5a5a'
+console.log(`NAME: ${nameInput.value}`);
+console.log(`EMAIL ${emailInput.value}`);
+console.log(`OTHER JOB: ${otherTitleInput.value}`);
+
+sizeDropdown.style.backgroundColor = '#ff5a5a'
+// designDropdown.style.backgroundColor = 'red'
+colorDropdown.style.backgroundColor = '#ff5a5a'
+console.log(`SIZE: ${sizeDropdown.value}`);
+console.log(`DESIGN: ${designDropdown.value}`);
+console.log(`COLOR: ${colorDropdown.value}`);
+
+paymentDropdown.style.backgroundColor = '#ff5a5a'
+ccInput.style.backgroundColor = '#ff5a5a'
+zipInput.style.backgroundColor = '#ff5a5a'
+cvvInput.style.backgroundColor = '#ff5a5a'
+expDateDropdown.style.backgroundColor = '#ff5a5a'
+expYearDropdown.style.backgroundColor = '#ff5a5a'
+console.log(`PAYMENT METHOD: ${paymentDropdown.value}`);
+console.log(`CARD NUMBER: ${ccInput.value}`);
+console.log(`ZIP CODE: ${zipInput.value}`);
+console.log(`CVV: ${cvvInput.value}`);
+console.log(`EXP DATE: ${expDateDropdown.value}`);
+console.log(`EXP YEAR: ${expYearDropdown.value}`);
