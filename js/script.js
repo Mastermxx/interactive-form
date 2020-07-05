@@ -90,6 +90,71 @@ designDropdown.addEventListener('change', function() {
 // ==================================================
 
 
+let checkboxes = [];
+
+const allInputs = document.getElementsByTagName("input");
+for (let i = 0; i < allInputs.length; i++) {
+    currentInput = allInputs[i];
+    if (currentInput.type === 'checkbox')
+        checkboxes.push(currentInput)
+}
+
+console.log(checkboxes[0].attributes[2].value)
+
+for (let i = 0; i < checkboxes.length; i++) {
+    console.log(checkboxes[i].attributes[2].value)
+}
+
+// checkboxes[0].addEventListener('click', function(e) {
+//     console.log(e.target.attributes);
+// });
+
+for (let i = 0; i < checkboxes.length; i++) {
+    let currentCheckbox = checkboxes[i]
+    currentCheckbox.addEventListener('click', function(e) {
+        console.log(e.target.attributes);
+    });
+}
+
+
+
+// Credit Card field should only accept a number between 13 and 16 digits.
+
+// The Zip Code field should accept a 5-digit number.
+
+// The CVV should only accept a number that is exactly 3 digits long.
+
+
+
+// ==================================================
+// =========  VALIDATION & TOOLTIPS =================
+// ==================================================
+
+function isValidUsername(username) {
+  return /^[a-z]+$/.test(username);
+}
+
+function showOrHideTip(show, element) {
+  // show element when show is true, hide when false
+  if (show) {
+    element.style.display = "inherit";
+  } else {
+    element.style.display = "none";
+  }
+}
+
+function createListener(validator) {
+  return e => {
+    const text = e.target.value;
+    const valid = validator(text);
+    const showTip = text !== "" && !valid;
+    const tooltip = e.target.nextElementSibling;
+    showOrHideTip(showTip, tooltip);
+    console.log('awdawd')
+  };
+}
+
+nameInput.addEventListener("input", createListener(isValidUsername));
 
 
 //
