@@ -30,14 +30,13 @@ const expYearDropdown = document.getElementById('exp-year');
 // * Default form settings
 nameInput.focus(); // Start in the first input field of the form, user-friendly
 otherTitleInput.style.display = 'none'; // By default hide the input for an other job title
-// colorDropdown.style.display = 'none' // By default hide the color options
+colorSelection.style.display = 'none'; // By default hide the color options
 
-
-colorSelection.style.display = 'none';
 
 // ==================================================
 // ===================  BASIC INFO ==================
 // ==================================================
+
 
 // If the user selects 'Other' by the 'Job Role' dropdown, show an input field with 'Your Job Role'
 titleDropdown.addEventListener('change', function() {
@@ -87,40 +86,45 @@ designDropdown.addEventListener('change', function() {
 // ====================  REGISTER ===================
 // ==================================================
 
-
-let checkboxes = [];
-
-const allInputs = document.getElementsByTagName("input");
-for (let i = 0; i < allInputs.length; i++) {
-    currentInput = allInputs[i];
-    if (currentInput.type === 'checkbox')
-        checkboxes.push(currentInput)
-}
+// let checkboxes = [];
+//
+// const allInputs = document.getElementsByTagName("input");
+// for (let i = 0; i < allInputs.length; i++) {
+//     currentInput = allInputs[i];
+//     if (currentInput.type === 'checkbox')
+//         checkboxes.push(currentInput)
+// }
 
 // console.log(checkboxes[0].attributes[2].value)
+let checkboxArray = []
+for (let i = 0; i < allCheckboxes.length; i++) {
 
-for (let i = 0; i < checkboxes.length; i++) {
-    // console.log(checkboxes[i].attributes[2].value)
+    const currentCheckbox = {
+       name:    allCheckboxes[i].name,
+       price:   allCheckboxes[i].dataset.cost,
+   };
+
+   checkboxArray.push(currentCheckbox)
+
 }
 
+console.log(checkboxArray)
 // checkboxes[0].addEventListener('click', function(e) {
 //     console.log(e.target.attributes);
 // });
+// let totalCost = '0';
+// for (let i = 0; i < checkboxes.length; i++) {
+//     let currentCheckbox = checkboxes[i]
+//     currentCheckbox.addEventListener('click', function(e) {
+//         // console.log(e.target.attributes[2].value);
+//         totalCost += e.target.attributes[2].value;
+//     });
+// }
 
-for (let i = 0; i < checkboxes.length; i++) {
-    let currentCheckbox = checkboxes[i]
-    currentCheckbox.addEventListener('click', function(e) {
-        console.log(e.target.attributes);
-    });
-}
+// console.log(totalCost)
 
 
 
-// Credit Card field should only accept a number between 13 and 16 digits.
-
-// The Zip Code field should accept a 5-digit number.
-
-// The CVV should only accept a number that is exactly 3 digits long.
 
 
 
@@ -128,9 +132,19 @@ for (let i = 0; i < checkboxes.length; i++) {
 // =========  VALIDATION & TOOLTIPS =================
 // ==================================================
 
+// Validate name on only letters and spaces.
 function isValidUsername(username) {
-  return /^[a-z]+$/.test(username);
+  return /^[a-zA-Z\s]+$/.test(username);
 }
+
+// Validate email on (something + @ + something + . + something) example: 'dave@teamtreehouse.com'
+function isValidEmail(email) {
+    return /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
+}
+
+// Credit Card field should only accept a number between 13 and 16 digits.
+// The Zip Code field should accept a 5-digit number.
+// The CVV should only accept a number that is exactly 3 digits long.
 
 function showOrHideTip(show, element) {
   // show element when show is true, hide when false
@@ -152,10 +166,11 @@ function createListener(validator) {
 }
 
 nameInput.addEventListener("input", createListener(isValidUsername));
-emailInput.addEventListener("input", createListener(isValidUsername));
+emailInput.addEventListener("input", createListener(isValidEmail));
 
 
 
+// ====================================================
 
 console.log(`NAME: ${nameInput.value}`);
 console.log(`EMAIL ${emailInput.value}`);
@@ -173,3 +188,10 @@ console.log(`ZIP CODE: ${zipInput.value}`);
 console.log(`CVV: ${cvvInput.value}`);
 console.log(`EXP DATE: ${expDateDropdown.value}`);
 console.log(`EXP YEAR: ${expYearDropdown.value}`);
+
+
+
+
+document.body.addEventListener('click', function() {
+    console.log(totalCost)
+});
