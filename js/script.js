@@ -13,6 +13,8 @@ const colorDropdown = document.getElementById('color');
 // Register for Activities Selectors
 // const checkboxes = document.querySelectorAll('[data-day-and-time]');
 // const allCheckboxes = document.querySelectorAll('[data-cost]');
+const totalCostDiv = document.querySelector('[data-totalCost]');
+
 
 // Payment Info Selectors
 const paymentDropdown = document.getElementById('payment');
@@ -51,6 +53,13 @@ titleDropdown.addEventListener('change', function() {
 // ==================================================
 // ==================  T-SHIRT INFO =================
 // ==================================================
+
+/*
+This is a requiredment for exceed expectations
+1. T Shirt Section
+Hide the "Color" label and select menu until a T-Shirt design is selected from the "Design" menu.
+*/
+
 
 designDropdown.addEventListener('change', function() {
 
@@ -93,6 +102,8 @@ const checkboxes = Array.from(document.querySelectorAll('input[type=checkbox]'))
 let totalCost = 0;
 const checkboxObjects = [];
 
+console.log(totalCostDiv)
+
 for (let i = 0; i < checkboxes.length; i++) {
     const currentCheckbox = {
         name:    checkboxes[i].name,
@@ -104,9 +115,9 @@ for (let i = 0; i < checkboxes.length; i++) {
 
     checkboxes[i].addEventListener('change', function(e) {
         checkboxObjects[i].checked = e.target.checked;
-        if (checkboxObjects[i].checked === true) {
-            totalCost = totalCost + parseInt(checkboxObjects[i].price);
-        }
+        if (checkboxObjects[i].checked === true) totalCost = totalCost + parseInt(checkboxObjects[i].price);
+        else totalCost = totalCost - parseInt(checkboxObjects[i].price);
+        totalCostDiv.textContent = totalCost;
     });
 }
 
@@ -203,7 +214,9 @@ function createListener(validator) {
 }
 
 // Validation Basic Info
-nameInput.addEventListener("input", createListener(isValidUsername));
+nameInput.addEventListener("input", createListener(isValidUsername), function() {
+    nameInput.style.border = ''
+});
 emailInput.addEventListener("input", createListener(isValidEmail));
 // Validation Payment Info
 ccInput.addEventListener("input", createListener(isValidCreditcard));
@@ -217,6 +230,10 @@ cvvInput.addEventListener("input", createListener(isValidCVV));
 
 
 // registerButton
+
+// Check if name is not null & valid
+// check if email is not null & valid
+// check if
 
 // function registerReady() {
 //
