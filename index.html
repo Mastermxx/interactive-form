@@ -21,12 +21,12 @@
         <legend>Basic Info</legend>
 
         <label for="name">Name:</label>
-        <span class="tooltip">Make sure this field only contains letters</span>
+        <span class="tooltip">Please make sure this field only contains letters</span>
         <input type="text" id="name" name="user-name" tabindex="1">
 
 
         <label for="mail">Email:</label>
-        <span class="tooltip">Make sure this contains a valid email address</span>
+        <span class="tooltip">Please make sure this contains a valid email address</span>
         <input type="email" id="mail" name="user-email" tabindex="2">
 
         <label for="title">Job Role</label>
@@ -111,6 +111,7 @@
             npm Workshop — Wednesday 1pm-4pm, $100
           </label>
 
+          <div>The total price : <span data-totalCost></span></div>
       </fieldset>
       <fieldset>
         <legend>Payment Info</legend>
@@ -127,16 +128,19 @@
 
           <div class="col-6 col">
             <label for="cc-num">Card Number:</label>
+            <span class="tooltip">Please make sure this contains a valid email address</span>
         	  <input id="cc-num" name="user-cc-num" type="text">
           </div>
 
           <div class="col-3 col">
             <label for="zip">Zip Code:</label>
+            <span class="tooltip">Only 5 numbers allowed</span>
             <input id="zip" name="user-zip" type="text">
           </div>
 
           <div class="col-3 col">
             <label for="cvv">CVV:</label>
+            <span class="tooltip">Only 3 numbers allowed</span>
             <input id="cvv" name="user-cvv" type="text" maxlength="3">
           </div>
 
@@ -175,7 +179,7 @@
 
       </fieldset>
 
-      <button type="submit">Register</button>
+      <button type="submit" disabled>Register</button>
 
     </form>
 

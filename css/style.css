@@ -237,3 +237,13 @@ option {
     border-radius: 50%;
     margin-top: 30px;
 }
+
+button:disabled {
+    background: #ddd;
+    color: #bbb;
+    border: #aaa;
+}
+
+#credit-card {
+    display: none;
+}

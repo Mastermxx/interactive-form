@@ -11,17 +11,20 @@ const colorSelection = document.getElementById('colors-js-puns');
 const colorDropdown = document.getElementById('color');
 
 // Register for Activities Selectors
-// const mainConference = document.querySelectorAll('[data-day-and-time]');
-const allCheckboxes = document.querySelectorAll('[data-cost]');
+// const checkboxes = document.querySelectorAll('[data-day-and-time]');
+// const allCheckboxes = document.querySelectorAll('[data-cost]');
 
 // Payment Info Selectors
 const paymentDropdown = document.getElementById('payment');
 const ccInput = document.getElementById('cc-num');
+const creditcardDiv = document.getElementById('credit-card');
 const zipInput = document.getElementById('zip');
 const cvvInput = document.getElementById('cvv');
 const expDateDropdown = document.getElementById('exp-month');
 const expYearDropdown = document.getElementById('exp-year');
 
+// Register button
+const registerButton = document.querySelector('button');
 
 // ==================================================
 // ================  DEFAULT SETTINGS ===============
@@ -53,28 +56,28 @@ designDropdown.addEventListener('change', function() {
 
     const selectedDesign = designDropdown.options[designDropdown.selectedIndex].value;
     const selectedColor = colorDropdown.options[colorDropdown.selectedIndex].value;
-
+    const colorOptions = colorDropdown.options;
 
     switch(selectedDesign) {
         case 'js puns':
             colorSelection.style.display = 'block'
-            colorDropdown.options[0].selected = 'true'
-            colorDropdown.options[1].style.display = 'block'
-            colorDropdown.options[2].style.display = 'block'
-            colorDropdown.options[3].style.display = 'block'
-            colorDropdown.options[4].style.display = 'none'
-            colorDropdown.options[5].style.display = 'none'
-            colorDropdown.options[6].style.display = 'none'
+            colorOptions[0].selected = 'true'
+            colorOptions[1].style.display = 'block'
+            colorOptions[2].style.display = 'block'
+            colorOptions[3].style.display = 'block'
+            colorOptions[4].style.display = 'none'
+            colorOptions[5].style.display = 'none'
+            colorOptions[6].style.display = 'none'
             break;
         case 'heart js':
             colorSelection.style.display = 'block'
-            colorDropdown.options[0].selected = 'true'
-            colorDropdown.options[1].style.display = 'none'
-            colorDropdown.options[2].style.display = 'none'
-            colorDropdown.options[3].style.display = 'none'
-            colorDropdown.options[4].style.display = 'block'
-            colorDropdown.options[5].style.display = 'block'
-            colorDropdown.options[6].style.display = 'block'
+            colorOptions[0].selected = 'true'
+            colorOptions[1].style.display = 'none'
+            colorOptions[2].style.display = 'none'
+            colorOptions[3].style.display = 'none'
+            colorOptions[4].style.display = 'block'
+            colorOptions[5].style.display = 'block'
+            colorOptions[6].style.display = 'block'
             break;
         default:
             colorSelection.style.display = 'none'
@@ -86,45 +89,67 @@ designDropdown.addEventListener('change', function() {
 // ====================  REGISTER ===================
 // ==================================================
 
-// let checkboxes = [];
-//
-// const allInputs = document.getElementsByTagName("input");
-// for (let i = 0; i < allInputs.length; i++) {
-//     currentInput = allInputs[i];
-//     if (currentInput.type === 'checkbox')
-//         checkboxes.push(currentInput)
-// }
+const checkboxes = Array.from(document.querySelectorAll('input[type=checkbox]'));
+let totalCost = 0;
+const checkboxObjects = [];
 
-// console.log(checkboxes[0].attributes[2].value)
-let checkboxArray = []
-for (let i = 0; i < allCheckboxes.length; i++) {
-
+for (let i = 0; i < checkboxes.length; i++) {
     const currentCheckbox = {
-       name:    allCheckboxes[i].name,
-       price:   allCheckboxes[i].dataset.cost,
-   };
+        name:    checkboxes[i].name,
+        day:     checkboxes[i].getAttribute('data-day-and-time'),
+        price:   checkboxes[i].getAttribute('data-cost'),
+        checked: checkboxes[i].checked,
+    };
+    checkboxObjects.push(currentCheckbox);
 
-   checkboxArray.push(currentCheckbox)
-
+    checkboxes[i].addEventListener('change', function(e) {
+        checkboxObjects[i].checked = e.target.checked;
+        if (checkboxObjects[i].checked === true) {
+            totalCost = totalCost + parseInt(checkboxObjects[i].price);
+        }
+    });
 }
 
-console.log(checkboxArray)
-// checkboxes[0].addEventListener('click', function(e) {
-//     console.log(e.target.attributes);
+
+// WORKING KEVIN MODE
+// const camelCaseName = (string) => (
+//
+//     string.split('-').map((piece, i)=> {
+//         if(i === 0) return piece
+//         else return piece.charAt(0).toUpperCase() + piece.slice(1)
+//     }
+//
+//     ).join('')
+// )
+//
+// const allCheckboxes = Array.from(document.querySelectorAll('input[type=checkbox]'));
+// const checkboxes = {};
+//
+// allCheckboxes.forEach( checkbox => {
+//     const name = checkbox.name;
+//
+//     if (name) {
+//
+//         const cC_name = camelCaseName(name);
+//
+//         checkboxes[cC_name] = {
+//             day: checkbox.getAttribute('data-day-and-time'),
+//             price: checkbox.getAttribute('data-cost'),
+//             checked: checkbox.checked,
+//         }
+//
+//         checkbox.addEventListener('change', (e) => checkboxes[cC_name].checked = e.target.checked)
+//     }
 // });
-// let totalCost = '0';
-// for (let i = 0; i < checkboxes.length; i++) {
-//     let currentCheckbox = checkboxes[i]
-//     currentCheckbox.addEventListener('click', function(e) {
-//         // console.log(e.target.attributes[2].value);
-//         totalCost += e.target.attributes[2].value;
-//     });
-// }
-
-// console.log(totalCost)
 
 
-
+// ==================================================
+// ===============  PAYMENT INFO ====================
+// ==================================================
+paymentDropdown.addEventListener("change", function() {
+    if (paymentDropdown.value === 'credit card') creditcardDiv.style.display = 'inherit';
+    else creditcardDiv.style.display = 'none';
+});
 
 
 
@@ -143,8 +168,20 @@ function isValidEmail(email) {
 }
 
 // Credit Card field should only accept a number between 13 and 16 digits.
+// NEEDS FIX
+function isValidCreditcard(creditcard) {
+    return /^[0-9]{13}$/.test(creditcard);
+}
+
 // The Zip Code field should accept a 5-digit number.
+function isValidZipCode(zipcode) {
+    return /^[0-9]{5}$/.test(zipcode);
+}
+
 // The CVV should only accept a number that is exactly 3 digits long.
+function isValidCVV(cvv) {
+    return /^[0-9]{3}$/.test(cvv);
+}
 
 function showOrHideTip(show, element) {
   // show element when show is true, hide when false
@@ -165,12 +202,38 @@ function createListener(validator) {
   };
 }
 
+// Validation Basic Info
 nameInput.addEventListener("input", createListener(isValidUsername));
 emailInput.addEventListener("input", createListener(isValidEmail));
+// Validation Payment Info
+ccInput.addEventListener("input", createListener(isValidCreditcard));
+zipInput.addEventListener("input", createListener(isValidZipCode));
+cvvInput.addEventListener("input", createListener(isValidCVV));
 
+
+// ==================================================
+// =========  VALIDATION ON SUBMIT =================
+// ==================================================
+
+
+// registerButton
+
+// function registerReady() {
+//
+// }
+//
+// var inputs = document.getElementsByClassName('my-input-class');
+// for(var i = 0; i < inputs.length; i++) {
+//     inputs[i].disabled = false;
+// }
 
 
 // ====================================================
+
+document.body.addEventListener('click', function() {
+    console.log(totalCost)
+    console.log(checkboxObjects)
+});
 
 console.log(`NAME: ${nameInput.value}`);
 console.log(`EMAIL ${emailInput.value}`);
@@ -188,10 +251,3 @@ console.log(`ZIP CODE: ${zipInput.value}`);
 console.log(`CVV: ${cvvInput.value}`);
 console.log(`EXP DATE: ${expDateDropdown.value}`);
 console.log(`EXP YEAR: ${expYearDropdown.value}`);
-
-
-
-
-document.body.addEventListener('click', function() {
-    console.log(totalCost)
-});
