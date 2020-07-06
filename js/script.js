@@ -31,9 +31,11 @@ const bitcoinDiv = document.getElementById('bitcoin');
 // Register button
 const registerButton = document.querySelector('button');
 
+
 // ==================================================
 // ================  DEFAULT SETTINGS ===============
 // ==================================================
+
 
 // * Default form settings
 nameInput.focus(); // Start in the first input field of the form, user-friendly
@@ -56,12 +58,9 @@ titleDropdown.addEventListener('change', function() {
 // ==================================================
 // ==================  T-SHIRT INFO =================
 // ==================================================
-
-/*
-This is a requiredment for exceed expectations
+/* This is a requiredment for exceed expectations
 1. T Shirt Section
-Hide the "Color" label and select menu until a T-Shirt design is selected from the "Design" menu.
-*/
+Hide the "Color" label and select menu until a T-Shirt design is selected from the "Design" menu. */
 
 
 designDropdown.addEventListener('change', function() {
@@ -103,8 +102,6 @@ colorDropdown.addEventListener('change', function() {
     const colorOptions = colorDropdown.options;
     const colorCircle = document.querySelector('.chosen-color')
 
-    console.log(selectedColor)
-
     switch(selectedColor) {
         case selectedColor:
             colorCircle.style.backgroundColor = selectedColor;
@@ -117,15 +114,15 @@ colorDropdown.addEventListener('change', function() {
     }
 })
 
+
 // ==================================================
 // ====================  REGISTER ===================
 // ==================================================
 
+
 const checkboxes = Array.from(document.querySelectorAll('input[type=checkbox]'));
 let totalCost = 0;
 const checkboxObjects = [];
-
-console.log(totalCostDiv)
 
 for (let i = 0; i < checkboxes.length; i++) {
     const currentCheckbox = {
@@ -150,44 +147,12 @@ for (let i = 0; i < checkboxes.length; i++) {
 }
 
 
-// WORKING KEVIN MODE
-// const camelCaseName = (string) => (
-//
-//     string.split('-').map((piece, i)=> {
-//         if(i === 0) return piece
-//         else return piece.charAt(0).toUpperCase() + piece.slice(1)
-//     }
-//
-//     ).join('')
-// )
-//
-// const allCheckboxes = Array.from(document.querySelectorAll('input[type=checkbox]'));
-// const checkboxes = {};
-//
-// allCheckboxes.forEach( checkbox => {
-//     const name = checkbox.name;
-//
-//     if (name) {
-//
-//         const cC_name = camelCaseName(name);
-//
-//         checkboxes[cC_name] = {
-//             day: checkbox.getAttribute('data-day-and-time'),
-//             price: checkbox.getAttribute('data-cost'),
-//             checked: checkbox.checked,
-//         }
-//
-//         checkbox.addEventListener('change', (e) => checkboxes[cC_name].checked = e.target.checked)
-//     }
-// });
-
-
 // ==================================================
 // ===============  PAYMENT INFO ====================
 // ==================================================
+
+
 paymentDropdown.addEventListener("change", function() {
-    // if (paymentDropdown.value === 'credit card') creditcardDiv.style.display = 'inherit';
-    // else creditcardDiv.style.display = 'none';
 
     switch(paymentDropdown.value) {
         case 'credit card':
@@ -214,10 +179,10 @@ paymentDropdown.addEventListener("change", function() {
 });
 
 
-
 // ==================================================
 // =========  VALIDATION & TOOLTIPS =================
 // ==================================================
+
 
 // Validate name on only letters and spaces.
 function isValidUsername(username) {
@@ -248,33 +213,42 @@ function isValidCVV(cvv) {
 
 function showOrHideTip(show, element) {
   // show element when show is true, hide when false
-  currentElement = element.nextElementSibling.name;
   if (show) {
-    element.style.display = "inherit";
+    element.style.display = 'inherit';
     element.nextElementSibling.style.borderColor = 'orange'
   } else {
-    element.style.display = "none";
+    element.style.display = 'none';
     element.nextElementSibling.style.borderColor = '#4bc970'
   }
 }
 
+const errors = {}
+
 function createListener(validator) {
   return e => {
-    const text = e.target.value;
-    const valid = validator(text);
-    const showTip = text !== "" && !valid;
+
+    const inputValue = e.target.value;
+    const valid = validator(inputValue);
+    const showTip = inputValue !== '' && !valid;
     const tooltip = e.target.previousElementSibling;
+    const currentElement = e.target.name;
     showOrHideTip(showTip, tooltip);
+
+    const currentElementObj = e.target.name.replace('-', '');
+    if(valid) errors[currentElementObj] = true;
+    else errors[currentElementObj] = false;
+    console.log(currentElement)
   };
 }
 
+
 // Validation Basic Info
-nameInput.addEventListener("input", createListener(isValidUsername));
-emailInput.addEventListener("input", createListener(isValidEmail));
+nameInput.addEventListener('input', createListener(isValidUsername));
+emailInput.addEventListener('input', createListener(isValidEmail));
 // Validation Payment Info
-ccInput.addEventListener("input", createListener(isValidCreditcard));
-zipInput.addEventListener("input", createListener(isValidZipCode));
-cvvInput.addEventListener("input", createListener(isValidCVV));
+ccInput.addEventListener('input', createListener(isValidCreditcard));
+zipInput.addEventListener('input', createListener(isValidZipCode));
+cvvInput.addEventListener('input', createListener(isValidCVV));
 
 
 // ==================================================
@@ -295,51 +269,22 @@ cvvInput.addEventListener("input", createListener(isValidCVV));
 
 // if all this is the case, you are able to submit
 
-// function registerReady() {
-//
-// }
-//
-// var inputs = document.getElementsByClassName('my-input-class');
-// for(var i = 0; i < inputs.length; i++) {
-//     inputs[i].disabled = false;
-// }
 
+document.body.addEventListener('click', function() {
+    console.log(errors)
 
-// ====================================================
-
-
-
-
-// document.body.addEventListener('click', function() {
-//     console.log(checkboxObjects)
-//     console.log(submitStuff)
-//
-//
-//     console.log(`NAME: ${nameInput.value}`);
-//     console.log(`EMAIL ${emailInput.value}`);
-//     console.log(`OTHER JOB: ${otherTitleInput.value}`);
-//
-//
-//     console.log(`SIZE: ${sizeDropdown.value}`);
-//     console.log(`DESIGN: ${designDropdown.value}`);
-//     console.log(`COLOR: ${colorDropdown.value}`);
-//
-//
-//     console.log(`PAYMENT METHOD: ${paymentDropdown.value}`);
-//     console.log(`CARD NUMBER: ${ccInput.value}`);
-//     console.log(`ZIP CODE: ${zipInput.value}`);
-//     console.log(`CVV: ${cvvInput.value}`);
-//     console.log(`EXP DATE: ${expDateDropdown.value}`);
-//     console.log(`EXP YEAR: ${expYearDropdown.value}`);
-// });
-
-
-
+    if( isValidUsername(nameInput.value) &&
+        isValidEmail(emailInput.value) &&
+        isValidCreditcard(ccInput.value) &&
+        isValidZipCode(zipInput.value) &&
+        isValidCVV(cvvInput.value)) {
+            registerButton.disabled = false;
+        }
+});
 
 
 registerButton.addEventListener('click', function() {
-    event.preventDefault();
-    console.log(submitStuff)
+
 
 
 })
