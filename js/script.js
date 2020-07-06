@@ -97,6 +97,26 @@ designDropdown.addEventListener('change', function() {
 })
 
 
+colorDropdown.addEventListener('change', function() {
+
+    const selectedColor = colorDropdown.options[colorDropdown.selectedIndex].value;
+    const colorOptions = colorDropdown.options;
+    const colorCircle = document.querySelector('.chosen-color')
+
+    console.log(selectedColor)
+
+    switch(selectedColor) {
+        case selectedColor:
+            colorCircle.style.backgroundColor = selectedColor;
+            break;
+        case 'Select a color':
+            colorCircle.style.backgroundColor = '#fff';
+            break;
+        default:
+            colorCircle.style.backgroundColor = '#fff';
+    }
+})
+
 // ==================================================
 // ====================  REGISTER ===================
 // ==================================================
@@ -225,8 +245,10 @@ function isValidCVV(cvv) {
     return /^[0-9]{3}$/.test(cvv);
 }
 
+
 function showOrHideTip(show, element) {
   // show element when show is true, hide when false
+  currentElement = element.nextElementSibling.name;
   if (show) {
     element.style.display = "inherit";
     element.nextElementSibling.style.borderColor = 'orange'
@@ -253,11 +275,6 @@ emailInput.addEventListener("input", createListener(isValidEmail));
 ccInput.addEventListener("input", createListener(isValidCreditcard));
 zipInput.addEventListener("input", createListener(isValidZipCode));
 cvvInput.addEventListener("input", createListener(isValidCVV));
-
-
-
-
-
 
 
 // ==================================================
@@ -290,23 +307,39 @@ cvvInput.addEventListener("input", createListener(isValidCVV));
 
 // ====================================================
 
-document.body.addEventListener('click', function() {
-    console.log(checkboxObjects)
-});
-
-console.log(`NAME: ${nameInput.value}`);
-console.log(`EMAIL ${emailInput.value}`);
-console.log(`OTHER JOB: ${otherTitleInput.value}`);
 
 
-console.log(`SIZE: ${sizeDropdown.value}`);
-console.log(`DESIGN: ${designDropdown.value}`);
-console.log(`COLOR: ${colorDropdown.value}`);
+
+// document.body.addEventListener('click', function() {
+//     console.log(checkboxObjects)
+//     console.log(submitStuff)
+//
+//
+//     console.log(`NAME: ${nameInput.value}`);
+//     console.log(`EMAIL ${emailInput.value}`);
+//     console.log(`OTHER JOB: ${otherTitleInput.value}`);
+//
+//
+//     console.log(`SIZE: ${sizeDropdown.value}`);
+//     console.log(`DESIGN: ${designDropdown.value}`);
+//     console.log(`COLOR: ${colorDropdown.value}`);
+//
+//
+//     console.log(`PAYMENT METHOD: ${paymentDropdown.value}`);
+//     console.log(`CARD NUMBER: ${ccInput.value}`);
+//     console.log(`ZIP CODE: ${zipInput.value}`);
+//     console.log(`CVV: ${cvvInput.value}`);
+//     console.log(`EXP DATE: ${expDateDropdown.value}`);
+//     console.log(`EXP YEAR: ${expYearDropdown.value}`);
+// });
 
 
-console.log(`PAYMENT METHOD: ${paymentDropdown.value}`);
-console.log(`CARD NUMBER: ${ccInput.value}`);
-console.log(`ZIP CODE: ${zipInput.value}`);
-console.log(`CVV: ${cvvInput.value}`);
-console.log(`EXP DATE: ${expDateDropdown.value}`);
-console.log(`EXP YEAR: ${expYearDropdown.value}`);
+
+
+
+registerButton.addEventListener('click', function() {
+    event.preventDefault();
+    console.log(submitStuff)
+
+
+})
