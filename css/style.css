@@ -244,6 +244,7 @@ button:disabled {
     border: #aaa;
 }
 
-#credit-card {
+#paypal,
+#bitcoin {
     display: none;
 }

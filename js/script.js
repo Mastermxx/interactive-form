@@ -19,11 +19,14 @@ const totalCostDiv = document.querySelector('[data-totalCost]');
 // Payment Info Selectors
 const paymentDropdown = document.getElementById('payment');
 const ccInput = document.getElementById('cc-num');
-const creditcardDiv = document.getElementById('credit-card');
 const zipInput = document.getElementById('zip');
 const cvvInput = document.getElementById('cvv');
 const expDateDropdown = document.getElementById('exp-month');
 const expYearDropdown = document.getElementById('exp-year');
+
+const creditcardDiv = document.getElementById('credit-card');
+const paypalDiv = document.getElementById('paypal');
+const bitcoinDiv = document.getElementById('bitcoin');
 
 // Register button
 const registerButton = document.querySelector('button');
@@ -115,8 +118,13 @@ for (let i = 0; i < checkboxes.length; i++) {
 
     checkboxes[i].addEventListener('change', function(e) {
         checkboxObjects[i].checked = e.target.checked;
-        if (checkboxObjects[i].checked === true) totalCost = totalCost + parseInt(checkboxObjects[i].price);
-        else totalCost = totalCost - parseInt(checkboxObjects[i].price);
+
+        if (checkboxObjects[i].checked === true) {
+            totalCost = totalCost + parseInt(checkboxObjects[i].price);
+        } else {
+            totalCost = totalCost - parseInt(checkboxObjects[i].price);
+        }
+
         totalCostDiv.textContent = totalCost;
     });
 }
@@ -158,8 +166,31 @@ for (let i = 0; i < checkboxes.length; i++) {
 // ===============  PAYMENT INFO ====================
 // ==================================================
 paymentDropdown.addEventListener("change", function() {
-    if (paymentDropdown.value === 'credit card') creditcardDiv.style.display = 'inherit';
-    else creditcardDiv.style.display = 'none';
+    // if (paymentDropdown.value === 'credit card') creditcardDiv.style.display = 'inherit';
+    // else creditcardDiv.style.display = 'none';
+
+    switch(paymentDropdown.value) {
+        case 'credit card':
+            creditcardDiv.style.display = 'inherit'
+            paypalDiv.style.display = 'none'
+            bitcoinDiv.style.display = 'none'
+            break;
+        case 'paypal':
+            creditcardDiv.style.display = 'none'
+            paypalDiv.style.display = 'inherit'
+            bitcoinDiv.style.display = 'none'
+            break;
+        case 'bitcoin':
+            creditcardDiv.style.display = 'none'
+            paypalDiv.style.display = 'none'
+            bitcoinDiv.style.display = 'inherit'
+            break;
+        default:
+            creditcardDiv.style.display = 'inherit'
+            paypalDiv.style.display = 'none'
+            bitcoinDiv.style.display = 'none'
+    }
+
 });
 
 
@@ -198,8 +229,10 @@ function showOrHideTip(show, element) {
   // show element when show is true, hide when false
   if (show) {
     element.style.display = "inherit";
+    element.nextElementSibling.style.borderColor = 'orange'
   } else {
     element.style.display = "none";
+    element.nextElementSibling.style.borderColor = '#4bc970'
   }
 }
 
@@ -214,14 +247,17 @@ function createListener(validator) {
 }
 
 // Validation Basic Info
-nameInput.addEventListener("input", createListener(isValidUsername), function() {
-    nameInput.style.border = ''
-});
+nameInput.addEventListener("input", createListener(isValidUsername));
 emailInput.addEventListener("input", createListener(isValidEmail));
 // Validation Payment Info
 ccInput.addEventListener("input", createListener(isValidCreditcard));
 zipInput.addEventListener("input", createListener(isValidZipCode));
 cvvInput.addEventListener("input", createListener(isValidCVV));
+
+
+
+
+
 
 
 // ==================================================
@@ -233,7 +269,14 @@ cvvInput.addEventListener("input", createListener(isValidCVV));
 
 // Check if name is not null & valid
 // check if email is not null & valid
-// check if
+// check if at least 1 checkbox is checked
+// If "Credit Card" is the selected payment option,
+// the three fields accept only numbers:
+// a 13 to 16-digit credit card number,
+// a 5-digit zip code,
+// and 3-number CVV value.
+
+// if all this is the case, you are able to submit
 
 // function registerReady() {
 //
@@ -248,7 +291,6 @@ cvvInput.addEventListener("input", createListener(isValidCVV));
 // ====================================================
 
 document.body.addEventListener('click', function() {
-    console.log(totalCost)
     console.log(checkboxObjects)
 });
 
