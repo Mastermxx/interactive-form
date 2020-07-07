@@ -248,3 +248,13 @@ button:disabled {
 #bitcoin {
     display: none;
 }
+
+.error-checkbox {
+    background: darkorange;
+    padding: 10px;
+    margin: 10px 0;
+    color: #fff;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    display: none;
+}

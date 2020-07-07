@@ -11,10 +11,7 @@ const colorSelection = document.getElementById('colors-js-puns');
 const colorDropdown = document.getElementById('color');
 
 // Register for Activities Selectors
-// const checkboxes = document.querySelectorAll('[data-day-and-time]');
-// const allCheckboxes = document.querySelectorAll('[data-cost]');
 const totalCostDiv = document.querySelector('[data-totalCost]');
-
 
 // Payment Info Selectors
 const paymentDropdown = document.getElementById('payment');
@@ -29,6 +26,7 @@ const paypalDiv = document.getElementById('paypal');
 const bitcoinDiv = document.getElementById('bitcoin');
 
 // Register button
+const checkboxErrorMessage = document.querySelector('[data-error]');
 const registerButton = document.querySelector('button');
 
 
@@ -103,8 +101,6 @@ colorDropdown.addEventListener('change', function() {
 // ==================================================
 
 const checkboxes = Array.from(document.querySelectorAll('input[type=checkbox]'));
-const checkboxArray = [];
-
 let totalCost = 0;
 
 function updateTotalCost(price, add) {
@@ -120,12 +116,19 @@ for (let i = 0; i < checkboxes.length; i++) {
         price:   checkboxes[i].getAttribute('data-cost'),
         checked: checkboxes[i].checked,
     };
-    checkboxArray.push(currentCheckbox);
 
     checkboxes[i].addEventListener('change', function(e) {
     const add = e.target.checked;
         const price = currentCheckbox.price;
+        checkboxErrorMessage.style.display = 'none';
         updateTotalCost(price, add);
+
+        checkboxes.forEach( checkbox => {
+            if (checkbox.getAttribute('data-day-and-time') === checkboxes[i].getAttribute('data-day-and-time')) {
+                checkbox.checked === false;
+                checkbox.setAttribute('disabled', true);
+            }
+        });
     });
 }
 
@@ -150,14 +153,13 @@ paymentDropdown.addEventListener("change", function() {
 */
 const isValidUsername = (username) => /^[a-zA-Z\s]+$/.test(username);
 // Validate email on (something + @ + something + . + something) example: 'dave@teamtreehouse.com'
-const isValidEmail = (email) => /^[0-9]{13,16}$/.test(email);
+const isValidEmail = (email) => /^[^@]+@[^@.]+.[a-z]+$/i.test(email);
 // Credit Card field should only accept a number between 13 and 16 digits.
 const isValidCreditcard = (creditcard) => /^[0-9]{13,16}$/.test(creditcard);
 // The Zip Code field should accept a 5-digit number.
 const isValidZipCode = (zipcode) => /^[0-9]{5}$/.test(zipcode);
 // The CVV should only accept a number that is exactly 3 digits long.
 const isValidCVV = (cvv) => /^[0-9]{3}$/.test(cvv);
-
 
 
 function showOrHideTip(show, element) {
@@ -204,7 +206,11 @@ cvvInput.addEventListener('input', () => createListener(cvvInput, isValidCVV));
 registerButton.addEventListener('click', function(event) {
     event.preventDefault();
 
-
+    if (!checkboxes.filter(checkbox => checkbox.checked).length) {
+        checkboxErrorMessage.style.display = 'inherit';
+    } else {
+        checkboxErrorMessage.style.display = 'none';
+    }
 
     const allInputs = [
         {element: nameInput, validator: isValidUsername},
@@ -215,7 +221,7 @@ registerButton.addEventListener('click', function(event) {
     ];
 
     for (let i = 0; i < allInputs.length; i++) {
-        // if (i > 1 && paymentDropdown.value !== 'credit card') 
+        if (i > 1 && paymentDropdown.value !== 'credit card') break;
         const currentInput = allInputs[i];
         const currentValue = currentInput.element.value; // input value
         const currentValidator = currentInput.validator; // regex validator
@@ -230,5 +236,6 @@ registerButton.addEventListener('click', function(event) {
     }
 
     /// submit form
-    console.log('All is OK!');
+    console.log('Submitted - All is OK!');
+
 });
