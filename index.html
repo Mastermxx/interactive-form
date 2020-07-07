@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Register for Full Stack Conf</title>
+   <title>Register for Full Stack Conf</title>
     <link rel="stylesheet" href="css/reset.css">
-	<link rel="stylesheet" href="css/style.css">
+   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	<div class="container">
+   <div class="container">
 
     <header>
       <span>Register for</span>
@@ -68,7 +68,7 @@
           <div id="colors-js-puns" class="">
             <label for="color">Color:</label>
             <select id="color">
-              <option>Select a color</option>
+              <option value="default">Select a color</option>
               <option value="cornflowerblue">Cornflower Blue</option>
               <option value="darkslategrey">Dark Slate Grey</option>
               <option value="gold">Gold</option>
@@ -76,6 +76,7 @@
               <option value="steelblue">Steel Blue</option>
               <option value="dimgrey">Dim Grey</option>
             </select>
+
           </div>
           <div class="chosen-color"><div>
         </div>
@@ -128,7 +129,7 @@
           <div class="col-6 col">
             <label for="cc-num">Card Number:</label>
             <span class="tooltip">Should only contain between 13 and 16 numbers</span>
-        	  <input id="cc-num" name="user-cc-num" type="text">
+             <input id="cc-num" name="user-cc-num" type="text">
           </div>
 
           <div class="col-3 col">
@@ -140,7 +141,7 @@
           <div class="col-3 col">
             <label for="cvv">CVV:</label>
             <span class="tooltip">Only 3 numbers allowed</span>
-            <input id="cvv" name="user-cvv" type="text" maxlength="3">
+            <input id="cvv" name="user-cvv" type="text">
           </div>
 
           <label for="exp-month">Expiration Date:</label>
@@ -169,16 +170,16 @@
         </div>
 
         <div id="paypal" class="paypal">
-        	<p>If you selected the PayPal option we'll take you to Paypal's site to set up your billing information, when you click “Register” below.</p>
+           <p>If you selected the PayPal option we'll take you to Paypal's site to set up your billing information, when you click “Register” below.</p>
         </div>
 
         <div id="bitcoin" class="bitcoin">
-        	<p>If you selected the Bitcoin option we'll take you to the Coinbase site to set up your billing information. Due to the nature of exchanging Bitcoin, all Bitcoin transactions will be final.</p>
+           <p>If you selected the Bitcoin option we'll take you to the Coinbase site to set up your billing information. Due to the nature of exchanging Bitcoin, all Bitcoin transactions will be final.</p>
         </div>
 
       </fieldset>
 
-      <button type="submit" disabled>Register</button>
+      <button type="submit">Register</button>
 
     </form>
 
