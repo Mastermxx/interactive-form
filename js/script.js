@@ -281,10 +281,36 @@ document.body.addEventListener('click', function() {
             registerButton.disabled = false;
         }
 });
-
-
+//
+//
 registerButton.addEventListener('click', function() {
+    event.preventDefault();
+    const allInputs = [
+        {element: nameInput, validator: isValidUsername},
+        {element: emailInput, validator: isValidEmail},
+        {element: ccInput, validator: isValidCreditcard},
+        {element: zipInput, validator: isValidZipCode},
+        {element: cvvInput, validator: isValidCVV},
+    ];
 
+    const validate = (el, validator) => {
+        const text = el.value;
+        const valid = validator(text);
+        const tooltip = el.previousElementSibling;
+        showOrHideTip(!valid, tooltip);
+    };
 
+    for(let i = 0; i < allInputs.length; i++){
+        const currentInput = allInputs[i];
+        const inputIsValid = currentInput.validator(currentInput.element.value)
+        if(!inputIsValid){
+            allInputs.forEach( input => {
+                validate(input.element, input.validator);
+            });
+            return;
+        }
+    }
 
+    /// submit form
+    console.log('All is OK!');
 })
