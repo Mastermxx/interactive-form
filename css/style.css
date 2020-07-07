@@ -244,17 +244,13 @@ button:disabled {
     border: #aaa;
 }
 
-#paypal,
-#bitcoin {
-    display: none;
-}
-
 .error-checkbox {
-    background: darkorange;
-    padding: 10px;
-    margin: 10px 0;
-    color: #fff;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
     display: none;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: darkorange;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 0.8em;
+    width: max-content;
 }

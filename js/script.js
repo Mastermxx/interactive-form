@@ -107,7 +107,7 @@ function updateTotalCost(price, add) {
     if (add) totalCost = totalCost + parseInt(price);
     else totalCost = totalCost - parseInt(price);
     totalCostDiv.textContent = totalCost;
-}
+};
 
 for (let i = 0; i < checkboxes.length; i++) {
     const currentCheckbox = {
@@ -125,16 +125,29 @@ for (let i = 0; i < checkboxes.length; i++) {
 
         checkboxes.forEach( checkbox => {
             if (checkbox.getAttribute('data-day-and-time') === checkboxes[i].getAttribute('data-day-and-time')) {
-                checkbox.checked === false;
-                checkbox.setAttribute('disabled', true);
+                if(checkbox !== e.target){
+                    checkbox.disabled = true;
+                    checkbox.parentNode.style.color = '#ccc';
+                    if(checkbox.checked){
+                        checkbox.checked = false;
+                        const price = checkbox.getAttribute('data-cost')
+                        updateTotalCost(price, false);
+                    }
+                    else if(!e.target.checked) {
+                        checkbox.disabled = false;
+                        checkbox.parentNode.style.color = '';
+                    }
+                }
             }
         });
     });
-}
+};
 
 // ==================================================
 // ===============  PAYMENT INFO ====================
 // ==================================================
+paypalDiv.style.display = 'none';
+bitcoinDiv.style.display = 'none';
 
 paymentDropdown.addEventListener("change", function() {
     paypalDiv.style.display = paymentDropdown.value === 'paypal' ? 'inherit' : 'none';
@@ -161,20 +174,22 @@ const isValidZipCode = (zipcode) => /^[0-9]{5}$/.test(zipcode);
 // The CVV should only accept a number that is exactly 3 digits long.
 const isValidCVV = (cvv) => /^[0-9]{3}$/.test(cvv);
 
+const errorMessages = {
+    name : 'Please make sure this contains a valid name',
+    email : 'Please make sure this contains a valid email address',
+    ccnum : 'Should only contain between 13 and 16 numbers',
+    zip : 'Only 5 numbers allowed',
+    cvv : 'Only 3 numbers allowed'
+}
 
 function showOrHideTip(show, element) {
   // show element when show is true, hide when false
+  console.log(element.nextElementSibling.value)
   element.style.display = show ? 'inherit' : 'none';
   element.nextElementSibling.style.borderColor = show ? 'orange' : '#4bc970';
+  const nameNoDashes = element.nextElementSibling.name.replace('user-', '').replace('-', '');
+  element.textContent = show ? element.nextElementSibling.value === '' ? 'This field can not be empty' : errorMessages[nameNoDashes] : ''
 }
-
-const errors = {};
-
-function createListener(element, validator) {
-    validate(element, validator);
-    const currentElementObj = element.name.replace('-', '');
-    errors[currentElementObj] = !validator(element.value);
-};
 
 const validate = (element, validator) => {
     const text = element.value;
@@ -183,11 +198,11 @@ const validate = (element, validator) => {
     showOrHideTip(!valid, tooltip);
 };
 
-nameInput.addEventListener('input', () => createListener(nameInput, isValidUsername));
-emailInput.addEventListener('input', () => createListener(emailInput, isValidEmail));
-ccInput.addEventListener('input', () => createListener(ccInput, isValidCreditcard));
-zipInput.addEventListener('input', () => createListener(zipInput, isValidZipCode));
-cvvInput.addEventListener('input', () => createListener(cvvInput, isValidCVV));
+nameInput.addEventListener('input', () => validate(nameInput, isValidUsername));
+emailInput.addEventListener('input', () => validate(emailInput, isValidEmail));
+ccInput.addEventListener('input', () => validate(ccInput, isValidCreditcard));
+zipInput.addEventListener('input', () => validate(zipInput, isValidZipCode));
+cvvInput.addEventListener('input', () => validate(cvvInput, isValidCVV));
 
 
 // ==================================================
@@ -203,22 +218,36 @@ cvvInput.addEventListener('input', () => createListener(cvvInput, isValidCVV));
 // a 5-digit zip code,
 // and 3-number CVV value.
 
+const allInputs = [
+    {element: nameInput, validator: isValidUsername},
+    {element: emailInput, validator: isValidEmail},
+    {element: ccInput, validator: isValidCreditcard},
+    {element: zipInput, validator: isValidZipCode},
+    {element: cvvInput, validator: isValidCVV},
+];
+
+const resetForm = () => {
+    document.querySelector("form").reset();
+    allInputs.forEach( input => {
+        input.element.setAttribute('style', '');
+    });
+    checkboxes.forEach( checkbox => {
+        checkbox.parentNode.setAttribute('style', '');
+        checkbox.disabled = false;
+        checkbox.checked = false;
+    });
+    totalCost = 0;
+    document.querySelector('[data-totalCost]').textContent = '0';
+    colorSelection.style.display = 'none';
+    colorCircle.style.backgroundColor = '#fff';
+    otherTitleInput.style.display = 'none';
+}
+
 registerButton.addEventListener('click', function(event) {
     event.preventDefault();
 
-    if (!checkboxes.filter(checkbox => checkbox.checked).length) {
-        checkboxErrorMessage.style.display = 'inherit';
-    } else {
-        checkboxErrorMessage.style.display = 'none';
-    }
-
-    const allInputs = [
-        {element: nameInput, validator: isValidUsername},
-        {element: emailInput, validator: isValidEmail},
-        {element: ccInput, validator: isValidCreditcard}, //2
-        {element: zipInput, validator: isValidZipCode}, // 3
-        {element: cvvInput, validator: isValidCVV}, // 4
-    ];
+    if (!checkboxes.filter(checkbox => checkbox.checked).length) checkboxErrorMessage.style.display = 'inherit';
+    else checkboxErrorMessage.style.display = 'none';
 
     for (let i = 0; i < allInputs.length; i++) {
         if (i > 1 && paymentDropdown.value !== 'credit card') break;
@@ -237,5 +266,6 @@ registerButton.addEventListener('click', function(event) {
 
     /// submit form
     console.log('Submitted - All is OK!');
+    resetForm();
 
 });
