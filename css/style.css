@@ -135,7 +135,7 @@ option {
 
 .container {
    margin: auto;
-   max-width: 680px;
+   max-width: 800px;
 }
 
 .shirt div {
@@ -217,15 +217,24 @@ option {
    }
 }
 
-
-.tooltip {
-    display: none;
+/* Extra styling */
+.error {
     padding: 10px;
     margin: 5px 0 0 0;
     background: darkorange;
     color: #fff;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
+    font-size: 0.8em;
+    width: max-content;
+}
+
+.error-checkbox {
+    padding: 10px;
+    margin-bottom: 10px;
+    background: darkorange;
+    color: #fff;
+    border-radius: 5px;
     font-size: 0.8em;
     width: max-content;
 }
@@ -242,15 +251,4 @@ button:disabled {
     background: #ddd;
     color: #bbb;
     border: #aaa;
-}
-
-.error-checkbox {
-    display: none;
-    padding: 10px;
-    margin-bottom: 10px;
-    background: darkorange;
-    color: #fff;
-    border-radius: 5px;
-    font-size: 0.8em;
-    width: max-content;
 }
