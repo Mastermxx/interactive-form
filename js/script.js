@@ -192,7 +192,7 @@ paymentDropdown.addEventListener("change", function() {
 // Validation regular expressions, returns boolean.
 const isValidUsername = (username) => /^[a-zA-Z\s]+$/.test(username);
 // Validate email on (something + @ + something + . + something) example: 'dave@teamtreehouse.com'
-const isValidEmail = (email) => /^[^@]+@[^@.]+.[a-z]+$/i.test(email);
+const isValidEmail = (email) => /^[^@]+@[^@.]+[a-z]+[.]+[^@]{2,}$/i.test(email);
 // Validate Credit Card number - field should only accept a number between 13 and 16 digits.
 const isValidCreditcard = (creditcard) => /^[0-9]{13,16}$/.test(creditcard);
 // Validate Zip Code - field should accept a 5-digit number.
