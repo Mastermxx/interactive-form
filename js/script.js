@@ -1,3 +1,11 @@
+/******************************************
+Treehouse FSJS Techdegree:
+project 3 - Interactive Form
+Script by Mark Reijgwart
+I am aiming for a "Exceeds Expectations" grade.
+If I don't get this grade I would like to redo it.
+******************************************/
+
 // Basic Info Selectors
 const nameInput = document.getElementById('name');
 const emailInput = document.getElementById('mail');
@@ -51,7 +59,6 @@ titleDropdown.addEventListener('change', function() {
 // ==================  T-SHIRT INFO =================
 //  This is a requirement for exceed expectations
 //  1. T Shirt Section - Hide the "Color" label and select menu until a T-Shirt design is selected from the "Design" menu.
-// ==================================================
 
 const colorCircle = document.querySelector('.chosen-color');
 
@@ -247,7 +254,7 @@ const allInputs = [
 ];
 
 const resetForm = () => {
-    // Select the form and reset it
+    // Select the form and reset it.
     document.querySelector("form").reset();
     // Get all the inputs and reset the styling.
     allInputs.forEach( input => {

@@ -219,6 +219,7 @@ option {
 
 /* Extra styling */
 .error {
+    display: none;
     padding: 10px;
     margin: 5px 0 0 0;
     background: darkorange;
@@ -230,6 +231,7 @@ option {
 }
 
 .error-checkbox {
+    display: none;
     padding: 10px;
     margin-bottom: 10px;
     background: darkorange;
